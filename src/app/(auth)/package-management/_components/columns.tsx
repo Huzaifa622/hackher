@@ -166,7 +166,7 @@ import { api } from "@/lib/axiosInstance";
                   </div>
                 </Button>
               </DialogTrigger>
-              <DialogContent className="overflow-x-auto">
+              <DialogContent className="overflow-x-auto min-w-[1200px]">
                 <DialogHeader>
                   <DialogTitle>Details</DialogTitle>
                 </DialogHeader>
@@ -175,15 +175,15 @@ import { api } from "@/lib/axiosInstance";
   {/* Table Header */}
   <TableHeader>
     <TableRow>
-      <TableHead className="w-[150px]">ID</TableHead>
+      {/* <TableHead className="w-[150px]">ID</TableHead> */}
+      <TableHead>User Name</TableHead>
+      <TableHead>User Email</TableHead>
       <TableHead>Subscribed At</TableHead>
       <TableHead>Package Name</TableHead>
       <TableHead>Package Price</TableHead>
       <TableHead>Coupon Code</TableHead>
       <TableHead>Discount Percentage</TableHead>
       <TableHead>Amount</TableHead>
-      <TableHead>User Name</TableHead>
-      <TableHead>User Email</TableHead>
       <TableHead>Commission Percent</TableHead>
       <TableHead className="text-right">Commission Amount</TableHead>
     </TableRow>
@@ -193,15 +193,15 @@ import { api } from "@/lib/axiosInstance";
   <TableBody>
     {data?.data.map((entry) => (
       <TableRow key={entry.id}>
-        <TableCell className="font-medium">{entry.id}</TableCell>
+        {/* <TableCell className="font-medium">{entry.id}</TableCell> */}
+        <TableCell>{entry.user_name}</TableCell>
+        <TableCell>{entry.user_email}</TableCell>
         <TableCell>{entry.subscribed_at}</TableCell>
         <TableCell>{entry.package_name}</TableCell>
         <TableCell>{entry.package_price}</TableCell>
         <TableCell>{entry.coupon_code}</TableCell>
         <TableCell>{entry.discount_percentage}%</TableCell>
         <TableCell>{entry.amount}</TableCell>
-        <TableCell>{entry.user_name}</TableCell>
-        <TableCell>{entry.user_email}</TableCell>
         <TableCell>{entry.commission_percent}%</TableCell>
         <TableCell className="text-right">{entry.commission_amount}</TableCell>
       </TableRow>
@@ -228,7 +228,7 @@ import { api } from "@/lib/axiosInstance";
                </div>
                 <DialogFooter>
                   <Button type="button" onClick={()=>generatePDF()}>
-                    Download CSV
+                    Download PDF
                   </Button>
                 </DialogFooter>
               </DialogContent>
