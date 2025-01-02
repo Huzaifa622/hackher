@@ -31,6 +31,9 @@ export default function PackageManagement() {
   const [data, setData] = useState<
     {
       stripe_coupon_id: string;
+      influencer_name: string;
+      influencer_contact: string;
+      packages: string;
       no_of_accounts_allowed: string;
       promo_code: string;
       discount_percent: string;
