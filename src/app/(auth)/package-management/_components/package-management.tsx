@@ -7,7 +7,8 @@ import Filter from "./filter";
 // import getHostAndGuestByAge from "../actions";
 import Loader from "@/components/ui/loader";
 import calculateAge from "@/lib/age-calculator";
-import getPackages from "../actions";
+import { getPackages, getPromo } from "../actions";
+
 
 
 // const date = new Date();
@@ -36,16 +37,29 @@ export default function PackageManagement() {
       expiration_date: string;
     }[]
   >();
+  const [packages, setPackages] = useState<
+    {
+      id: string;
+      name: string;
+      
+    }[]
+  >();
   const [loader, setLoader] = useState(true);
   const fetchAll = async () => {
-    const res = await getPackages();
+    const res = await getPromo();
     if (res) {
       const resData = res.data;
     
 // console.log()
       setData(resData);
     }
+const pRes = await getPackages();
+if (pRes) {
+  const resData = pRes.data;
 
+// console.log()
+  setPackages(resData);
+}
     setLoader(false);
   };
   useEffect(() => {
@@ -69,7 +83,7 @@ export default function PackageManagement() {
         setAge={setAgeGroup}
         setGender={setGender}
       /> */}
-      <DataTable fetchAll={fetchAll} columns={columns} data={data ? data : []} />
+      <DataTable fetchAll={fetchAll} columns={columns} data={data ? data : []} packages={packages!} />
     </div>
   );
 }
