@@ -40,7 +40,6 @@ export default function Login() {
     const res = await AdminLogin(data);
     console.log(res)
     if (res.status == true) {
-      console.log(res);
       toast.success(res.message);
       setLoader(false)
       localStorage.setItem("token", res.token);
