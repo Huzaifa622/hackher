@@ -44,6 +44,7 @@ export default function Login() {
       setLoader(false)
       localStorage.setItem("token", res.token);
       localStorage.setItem("user", JSON.stringify(res.data));
+      localStorage.setItem("role" , res.data.role)
       router.push("/hosts-guests-by-age");
     }
 

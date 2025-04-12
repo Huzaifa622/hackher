@@ -19,7 +19,7 @@ import React, { useEffect, useState } from "react";
 import Logout from "@/lib/auth";
 
 export default function Navbar() {
-  const [user , setUser] = useState<{full_name:string;}>()
+  const [user , setUser] = useState<{full_name:string;role:string}>()
   useEffect(()=>{
     const user = JSON.parse(localStorage.getItem("user")!)
     setUser(user) 
@@ -32,7 +32,7 @@ export default function Navbar() {
           <DropdownMenu>
             <DropdownMenuTrigger className="cursor-pointer outline-none" >
               {/* <Button variant="outline">Open</Button> */}
-              <AvatarName fname={user?.full_name || ""} />
+              <AvatarName fname={user?.full_name || ""} role={user?.role || ""} />
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-40">
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
