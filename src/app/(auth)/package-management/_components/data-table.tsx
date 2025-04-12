@@ -39,7 +39,7 @@ import { Label } from "@/components/ui/label";
 
 import { Button } from "@/components/ui/button";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { api } from "@/lib/axiosInstance";
 import toast from "react-hot-toast";
@@ -49,6 +49,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
   fetchAll: () => Promise<void>;
   packages: { id: string; name: string }[];
+  influencers: { id: string; fname: string; lname:string }[];
 }
 
 export function DataTable<TData, TValue>({
@@ -56,6 +57,7 @@ export function DataTable<TData, TValue>({
   data,
   fetchAll,
   packages,
+  influencers
 }: DataTableProps<TData, TValue>) {
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
@@ -78,7 +80,10 @@ export function DataTable<TData, TValue>({
   const [discount, setDiscount] = useState<string>("");
   const [accountAllowed, setAccountAllowed] = useState<string>("");
   const [selectedPackages, setSelectedPackages] = useState<string[]>([]);
-  const [influencer, setInfluencer] = useState<{name:string; commision:string; contact:string}>({name:"", commision:"", contact:""});
+  const [influencer, setInfluencer] = useState<{
+    id: string;
+    commision: string;
+  }>({ id: "", commision: "" });
 
   const handleSubmit = async (e: React.SyntheticEvent) => {
     e.preventDefault();
@@ -87,12 +92,14 @@ export function DataTable<TData, TValue>({
       return toast.error("Discount Percentage Should be between 1 to 99");
     }
     if (Number(influencer.commision) < 1 || Number(influencer.commision) > 99) {
-      return toast.error("Influencer Commission Percentage Should be between 1 to 99");
+      return toast.error(
+        "Influencer Commission Percentage Should be between 1 to 99"
+      );
     }
     if (selectedPackages.length == 0) {
       return toast.error("Please Select Package");
     }
-    
+
     try {
       const res = await api.post(
         "/superadmin/v1/promotion/create_promotions/",
@@ -101,10 +108,11 @@ export function DataTable<TData, TValue>({
           days_limit: days,
           discount_percentage: discount,
           no_of_accounts_allowed: accountAllowed,
-          packages:selectedPackages,
-          influencer_name:influencer.name,
-          influencer_commission:influencer.commision,
-          influencer_contact:influencer.contact
+          packages: selectedPackages,
+          // influencer_name:influencer.name,
+          influncer_id: influencer.id,
+          influencer_commission: influencer.commision,
+          // influencer_contact:influencer.contact
         }
       );
       console.log(res);
@@ -126,14 +134,16 @@ export function DataTable<TData, TValue>({
       // console.log(error)
     }
   };
+
  
+
   const toggleSelection = (id: string) => {
-    console.log("asdasdasd")
+    console.log("asdasdasd");
     setSelectedPackages((prev) =>
       prev.includes(id) ? prev.filter((pkg) => pkg !== id) : [...prev, id]
     );
   };
-  console.log(selectedPackages)
+  console.log(selectedPackages);
   return (
     <div className="bg-white p-3 rounded-lg my-8 shadow-xl border">
       <div className="flex items-center justify-between py-4">
@@ -223,33 +233,42 @@ export function DataTable<TData, TValue>({
                 </Label>
                 <Select>
                   <SelectTrigger className="w-full col-span-3 h-10">
-                    <SelectValue placeholder={selectedPackages.length > 0
-                        ? selectedPackages.map((id) =>
-                                packages.find((pkg) => pkg.id === id)?.name).join(", ") :"Select Package" } />
-                 
-              
+                    <SelectValue
+                      placeholder={
+                        selectedPackages.length > 0
+                          ? selectedPackages
+                              .map(
+                                (id) =>
+                                  packages.find((pkg) => pkg.id === id)?.name
+                              )
+                              .join(", ")
+                          : "Select Package"
+                      }
+                    />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
                       <SelectLabel>Packages</SelectLabel>
                       {packages.map((pkg) => (
-                            <div
-                key={pkg.id}
-                className={`px-2 py-1 cursor-pointer ${
-                  selectedPackages.includes(pkg.id) ? "bg-blue-100" : ""
-                }`}
-                onClick={() => {
-                  toggleSelection(pkg.id);
-                }}
-              >
-                {pkg.name}
-              </div>
+                        <div
+                          key={pkg.id}
+                          className={`px-2 py-1 cursor-pointer ${
+                            selectedPackages.includes(pkg.id)
+                              ? "bg-blue-100"
+                              : ""
+                          }`}
+                          onClick={() => {
+                            toggleSelection(pkg.id);
+                          }}
+                        >
+                          {pkg.name}
+                        </div>
                       ))}
                     </SelectGroup>
                   </SelectContent>
                 </Select>
               </div>
-              <div className="grid grid-cols-4 items-center gap-4">
+              {/* <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="name" className="text-right">
                   Influencer Name
                 </Label>
@@ -262,10 +281,33 @@ export function DataTable<TData, TValue>({
                   onChange={(e) => setInfluencer(prev=>({...prev , name:e.target.value}))}
                   className="col-span-3"
                 />
+              </div> */}
+              <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="name" className="text-right">
+                  Influencer
+                </Label>
+                <Select
+                  onValueChange={(val) =>
+                    setInfluencer((prev) => ({ ...prev, id: val }))
+                  }
+                >
+                  <SelectTrigger className="w-full col-span-3 h-10">
+                    <SelectValue placeholder="Select a Influencer" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {influencers?.map((i) => (
+                        <SelectItem key={i.id} value={i.id}>
+                          {i.fname + i.lname}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
               </div>
               <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="name" className="text-right">
-                Influencer Commision %
+                  Influencer Commision %
                 </Label>
                 <Input
                   id="discount"
@@ -275,11 +317,17 @@ export function DataTable<TData, TValue>({
                   min={1}
                   type="number"
                   value={influencer.commision}
-                  onChange={(e) => setInfluencer(prev=>({...prev , commision:e.target.value}))}
+                  onChange={(e) =>
+                    setInfluencer((prev) => ({
+                      ...prev,
+                      commision: e.target.value,
+                    }))
+                  }
                   className="col-span-3"
                 />
               </div>
-              <div className="grid grid-cols-4 items-center gap-4">
+
+              {/* <div className="grid grid-cols-4 items-center gap-4">
                 <Label htmlFor="name" className="text-right">
                   Influencer Contact
                 </Label>
@@ -292,7 +340,7 @@ export function DataTable<TData, TValue>({
                   onChange={(e) => setInfluencer(prev=>({...prev , contact:e.target.value}))}
                   className="col-span-3"
                 />
-              </div>
+              </div> */}
             </div>
             <DialogFooter>
               <Button type="button" onClick={handleSubmit}>
@@ -325,7 +373,6 @@ export function DataTable<TData, TValue>({
           <TableBody>
             {table.getRowModel().rows?.length ? (
               table.getRowModel().rows.map((row) => (
-                
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}

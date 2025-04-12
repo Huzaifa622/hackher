@@ -27,7 +27,7 @@ export default function Navbar() {
   return (
     <div>
       <div className="bg-white shadow-xl drop-shadow-xl">
-        <div className="flex items-center gap-4 justify-end py-2 px-5 ">
+        <div className="flex items-center gap-4 justify-end py-0 px-5 ">
           {/* <Bell color="gray" /> */}
           <DropdownMenu>
             <DropdownMenuTrigger className="cursor-pointer outline-none" >

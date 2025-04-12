@@ -1,4 +1,3 @@
-
 "use client";
 import { useEffect, useState } from "react";
 import { columns } from "./columns";
@@ -7,9 +6,7 @@ import Filter from "./filter";
 // import getHostAndGuestByAge from "../actions";
 import Loader from "@/components/ui/loader";
 import calculateAge from "@/lib/age-calculator";
-import { getPackages, getPromo } from "../actions";
-
-
+import { getInfluencers, getPackages, getPromo } from "../actions";
 
 // const date = new Date();
 // const data = [
@@ -44,27 +41,39 @@ export default function PackageManagement() {
     {
       id: string;
       name: string;
-      
+    }[]
+  >();
+  const [influencers, setInfluencers] = useState<
+    {
+      id: string;
+      fname: string;
+      lname: string;
     }[]
   >();
   const [loader, setLoader] = useState(true);
   const fetchAll = async () => {
-    const res = await getPromo();
-    if (res) {
-      const resData = res.data;
-    
-// console.log()
+    const promoRes = await getPromo();
+    if (promoRes) {
+      const resData = promoRes.data;
       setData(resData);
     }
-const pRes = await getPackages();
-if (pRes) {
-  const resData = pRes.data;
+    const pRes = await getPackages();
+    if (pRes) {
+      const resData = pRes.data;
 
-// console.log()
-  setPackages(resData);
-}
+      // console.log()
+      setPackages(resData);
+    }
+    const iRes = await getInfluencers();
+    if (iRes) {
+      const resData = iRes.data;
+
+      setInfluencers(resData);
+    }
     setLoader(false);
   };
+
+
   useEffect(() => {
     fetchAll();
   }, []);
@@ -78,16 +87,13 @@ if (pRes) {
   }
   return (
     <div className="p-5">
-      {/* <Filter
-        role={role}
-        age={ageGroup}
-        gender={gender}
-        setRole={setRole}
-        setAge={setAgeGroup}
-        setGender={setGender}
-      /> */}
-      <DataTable fetchAll={fetchAll} columns={columns} data={data ? data : []} packages={packages!} />
+      <DataTable
+        influencers={influencers!}
+        fetchAll={fetchAll}
+        columns={columns}
+        data={data ? data : []}
+        packages={packages!}
+      />
     </div>
   );
 }
-

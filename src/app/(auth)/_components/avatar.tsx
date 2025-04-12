@@ -10,8 +10,8 @@ export default function AvatarName({fname , role}:{fname:string; role:string}){
         />
         <AvatarFallback>CN</AvatarFallback>
       </Avatar>
-      <div className="text-[#2F2F3B]">
-        <h1 className="mb-2">{fname}</h1>
+      <div className="text-[#2F2F3B] py-1">
+        <h1 className="">{fname}</h1>
         <h4 className="text-xs">{role}</h4>
       </div>
       </div>
