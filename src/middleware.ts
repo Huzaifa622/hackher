@@ -2,28 +2,46 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 
 export function middleware(request: NextRequest) {
-  const token = request.cookies.get("token")?.value; // Parse the token
-  const { pathname } = request.nextUrl; // Extract pathname
+  const token = request.cookies.get("token")?.value;
+  const role = request.cookies.get("role")?.value;
+  const { pathname } = request.nextUrl;
 
-  // Allow unauthenticated users to access login and register
-  if (!token && pathname === "/login" ){
+
+  const superadminRoutes = ["/hosts-guests-by-age", "/snacks","/specific-symptoms","/host-stats","/relationship" , "/host-and-guest-by-location","/host-week-summary","/symptom-percentage-all-hosts","/package-management" , "/influencer"];
+  const influencer = ["/coupon-info"];
+
+  if (!token && pathname === "/login") {
     return NextResponse.next();
   }
 
-  // Redirect authenticated users away from login and register
-  if (token && pathname === "/login" ) {
+  if (token && pathname === "/login" && role == "superadmin") {
     return NextResponse.redirect(new URL("/hosts-guests-by-age", request.url));
   }
 
-  // Redirect unauthenticated users trying to access protected routes
-  if (!token && pathname !== "/login" ) {
+  if (token && pathname === "/login" && role == "superadmin") {
+    return NextResponse.redirect(new URL("/coupon-info", request.url));
+  }
+
+  if (!token && pathname !== "/login") {
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
-  // Allow all other cases
+
+  if (token) {
+    if (role === "superadmin" && !superadminRoutes.includes(pathname)) {
+      return NextResponse.redirect(new URL("/hosts-guests-by-age", request.url));
+    }
+
+    if (role === "influencer" && !influencer.includes(pathname)) {
+      return NextResponse.redirect(new URL("/coupon-info", request.url));
+    }
+  }
+
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/host-and-guest-by-location", "/login", "/protected-route"], // Define routes to protect
+  matcher: [
+    "/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
+  ], // Define routes to protect
 };

@@ -1,5 +1,5 @@
-import { columns } from "../_components/data-table/columns";
-import { DataTable } from "../_components/data-table/data-table";
+import { columns } from "../../_components/data-table/columns";
+import { DataTable } from "../../_components/data-table/data-table";
 import Filter from "./_components/filter";
 const date = new Date();
 const data =  [

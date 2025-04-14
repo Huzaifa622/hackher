@@ -110,7 +110,7 @@ export function DataTable<TData, TValue>({
           no_of_accounts_allowed: accountAllowed,
           packages: selectedPackages,
           // influencer_name:influencer.name,
-          influncer_id: influencer.id,
+          influencer: influencer.id,
           influencer_commission: influencer.commision,
           // influencer_contact:influencer.contact
         }

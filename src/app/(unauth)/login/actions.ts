@@ -22,6 +22,7 @@ export default async function AdminLogin(data: {
 
     if (response.status == true) {
       cookies().set("token", response.token);
+      cookies().set("role", response.data.role);
      
       return response;
     }
