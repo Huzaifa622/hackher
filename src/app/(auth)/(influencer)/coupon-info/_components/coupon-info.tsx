@@ -3,8 +3,7 @@ import { useEffect, useState } from "react";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
 import Loader from "@/components/ui/loader";
-import {getPromo } from "../actions";
-
+import { getCoupon } from "../actions";
 
 export default function CouponInfo() {
   const [data, setData] = useState<
@@ -20,17 +19,15 @@ export default function CouponInfo() {
     }[]
   >();
 
-
   const [loader, setLoader] = useState(true);
   const fetchAll = async () => {
-    const promoRes = await getPromo();
+    const promoRes = await getCoupon();
     if (promoRes) {
       const resData = promoRes.data;
       setData(resData);
     }
     setLoader(false);
   };
-
 
   useEffect(() => {
     fetchAll();
@@ -45,13 +42,7 @@ export default function CouponInfo() {
   }
   return (
     <div className="p-5">
-      <DataTable
-      
- 
-        columns={columns}
-        data={data ? data : []}
-      
-      />
+      <DataTable columns={columns} data={data ? data : []} />
     </div>
   );
 }

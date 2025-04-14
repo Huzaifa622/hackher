@@ -10,7 +10,7 @@ const nextConfig = {
         ]
       },
     images:{
-        unoptimized:true
+        unoptimized:true,
     },
     experimental: {
         serverActions: true,

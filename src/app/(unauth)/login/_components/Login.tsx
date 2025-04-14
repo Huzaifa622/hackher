@@ -8,10 +8,11 @@ import {
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { z } from "zod";
-import Logo from "./logo";
+
 import AdminLogin from "../actions";
 import toast from "react-hot-toast";
 import Loader from "@/components/ui/loader";
+import Logo from "./logo";
 // import { AdminLogin } from "../actions";
 
 const LoginSchema = z.object({
@@ -63,7 +64,7 @@ export default function Login() {
   return (
     <div className="w-[90%] md:w-[30%] ">
       <div className="flex justify-center items-center py-12">
-        <Logo />
+        <Logo/>
       </div>
       <div className=" rounded-sm p-4 py-12 shadow-lg bg-white ">
         <h1 className="text-2xl text-center text-[#262932] font-bold">
