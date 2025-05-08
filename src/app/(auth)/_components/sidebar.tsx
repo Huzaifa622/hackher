@@ -73,6 +73,10 @@ console.log(role)
                 title="Feedback"
                 href="/feedback"
               />
+                   <SidebarTab
+                title="Mercury Records"
+                href="/mercury-records"
+              />
             </>
           )}
            {role &&role == "influencer" && (
