@@ -69,6 +69,10 @@ console.log(role)
                 title="Personally Identifiable Information"
                 href="/pii"
               />
+                   <SidebarTab
+                title="Feedback"
+                href="/feedback"
+              />
             </>
           )}
            {role &&role == "influencer" && (
