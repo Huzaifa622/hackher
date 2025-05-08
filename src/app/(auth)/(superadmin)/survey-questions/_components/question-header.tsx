@@ -87,7 +87,7 @@ export default function QuestionHeader({
           onClick={async (e: React.SyntheticEvent) => {
             try {
               const res = await api.delete(
-                `/superadmin/v1/info/purge_symptom/?id=${id}`
+                `/superadmin/v1/survey/delete_survey_question/?id=${id}`
               );
               fetch();
               toast.success("Option Delete Successfully");

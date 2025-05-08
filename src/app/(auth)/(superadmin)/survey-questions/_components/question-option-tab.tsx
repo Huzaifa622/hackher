@@ -20,12 +20,12 @@ export default function OptionTab({
   idx,
   fetch,
 }: {
-  s: { id: string; name: string; symtom: string };
+  s: { id: string; choice_text: string; choice_type: string };
   idx: number;
   fetch: () => Promise<void>;
 }) {
   const [open, setOpen] = useState(false);
-  const [name, setName] = useState<string>(s.name);
+  const [name, setName] = useState<string>(s.choice_text);
 
   return (
     <div
@@ -34,7 +34,7 @@ export default function OptionTab({
     >
       <p>
         {idx + 1}
-        {"."} {s.name}
+        {"."} {s.choice_text}
       </p>
       <div className="flex items-center gap-1">
         <div className="hover:bg-gray-300 p-2 rounded-full">
@@ -93,7 +93,7 @@ export default function OptionTab({
           onClick={async (e: React.SyntheticEvent) => {
             try {
               const res = await api.delete(
-                `/superadmin/v1/info/delete_symptom_option/?id=${s.id}`
+                `/superadmin/v1/survey/delete_survey_choice/?id=${s.id}`
               );
               fetch();
               toast.success("Option Delete Successfully");
