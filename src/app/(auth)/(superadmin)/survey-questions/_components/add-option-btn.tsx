@@ -48,7 +48,7 @@ export default function AddOptionBtn({
                     onValueChange={(val: string) => setChoiceId(val)}
                   >
                     <SelectTrigger defaultValue={choiceId} className="w-[90%] mx-auto  bg-white">
-                      <SelectValue  defaultValue={choiceId} />
+                      <SelectValue placeholder={"Select Survey Type"}  defaultValue={choiceId} />
                     </SelectTrigger>
                     <SelectContent className="bg-white">
                       {survey.map((c) => (

@@ -66,14 +66,13 @@ export default function OptionTab({
                   type="button"
                   onClick={async (e: React.SyntheticEvent) => {
                     try {
-                      const res = await api.put(
-                        "/superadmin/v1/info/update_symptom_option/",
-                        {
-                          id: s.id,
-                          name: name,
+                      const res = await api.patch(
+                        `/superadmin/v1/survey/update_survey_choices/?id=${s.id}`,
+                  {
+                          choce_text: name,
                         }
                       );
-                      console.log(res);
+                      
                       fetch();
                       setOpen(false);
                     } catch (error: any) {
@@ -108,6 +107,4 @@ export default function OptionTab({
     </div>
   );
 }
-{
-  /*   */
-}
+
