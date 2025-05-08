@@ -49,7 +49,7 @@ export default function Filter({ role, gender, age , setAge , setGender,setRole 
             ))}
           </SelectContent>
         </Select>
-        <Select defaultValue={gender} onValueChange={(val:string)=>setGender(val as "male" | "female" | "other")}>
+        <Select defaultValue={gender} onValueChange={(val:string)=>setGender(val as "female" | "other")}>
           <SelectTrigger className="w-[90%] mx-auto  bg-white">
             <SelectValue className="capitalize" placeholder="Male" />
           </SelectTrigger>
