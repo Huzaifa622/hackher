@@ -61,6 +61,14 @@ console.log(role)
                 title="Influencer"
                 href="/influencer"
               />
+                 <SidebarTab
+                title="User's Account Deletion"
+                href="/deleted-users"
+              />
+                   <SidebarTab
+                title="Personally Identifiable Information"
+                href="/pii"
+              />
             </>
           )}
            {role &&role == "influencer" && (

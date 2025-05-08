@@ -7,7 +7,7 @@ export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
 
-  const superadminRoutes = ["/hosts-guests-by-age", "/snacks","/specific-symptoms","/host-stats","/relationship" , "/host-and-guest-by-location","/host-week-summary","/symptom-percentage-all-hosts","/package-management" , "/influencer"];
+  const superadminRoutes = ["/hosts-guests-by-age", "/snacks","/specific-symptoms","/host-stats","/relationship" , "/host-and-guest-by-location","/host-week-summary","/symptom-percentage-all-hosts","/package-management" , "/influencer" , "/deleted-users","/pii"];
   const influencer = ["/coupon-info"];
 
   if (!token && pathname === "/login") {
