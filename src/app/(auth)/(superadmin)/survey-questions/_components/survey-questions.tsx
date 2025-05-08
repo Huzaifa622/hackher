@@ -42,7 +42,11 @@ import toast from "react-hot-toast";
 //   },
 //   // ...
 // ];
-
+export interface ISurveyType{
+id:string;
+name:string;
+survey:string
+}
 export interface ICat {
   id: string;
   title: string;
@@ -65,6 +69,7 @@ export default function SurveyQuestions() {
   const [open, setOpen] = useState(false);
   const [allCat, setAllCat] = useState<ICat[]>([]);
   const [cat, setCat] = useState("bfcb16f3-7532-4079-bcc6-a5ef8fd461cc");
+  const [surveyType , setSurveyType] = useState([])
   const [data, setData] = useState<Question[]>();
   const [addQData, setAddQData] = useState<{
     question_type: string;

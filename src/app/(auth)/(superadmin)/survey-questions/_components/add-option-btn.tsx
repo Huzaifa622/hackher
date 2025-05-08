@@ -60,7 +60,7 @@ export default function AddOptionBtn({
                   "/superadmin/v1/survey/survey_choices/",
                   {
                     question: id,
-                    name: name,
+                    choice_text: name,
                     choice_type:cat
                   }
                 );
