@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
 import Filter from "./filter";
-import { getSurveyQuestion, getQCat, addSurveyQuestion } from "../actions";
+import { getSurveyQuestion, getQCat, addSurveyQuestion, getSurveyType } from "../actions";
 import Loader from "@/components/ui/loader";
 import calculateAge from "@/lib/age-calculator";
 import {
@@ -69,7 +69,7 @@ export default function SurveyQuestions() {
   const [open, setOpen] = useState(false);
   const [allCat, setAllCat] = useState<ICat[]>([]);
   const [cat, setCat] = useState("bfcb16f3-7532-4079-bcc6-a5ef8fd461cc");
-  const [surveyType , setSurveyType] = useState([])
+  const [surveyType , setSurveyType] = useState<ISurveyType[]>([])
   const [data, setData] = useState<Question[]>();
   const [addQData, setAddQData] = useState<{
     question_type: string;
@@ -80,9 +80,15 @@ export default function SurveyQuestions() {
     question_text: "",
     choice_selection_limit: "1",
   });
-
+console.log(surveyType)
   const [loader, setLoader] = useState(true);
   const fetchAll = async () => {
+const ssRes = await getSurveyType(cat)
+if(ssRes){
+  setSurveyType(ssRes.data)
+}
+
+
     const cRes = await getQCat();
     if (cRes) {
       setAllCat(cRes.data);
@@ -179,7 +185,7 @@ export default function SurveyQuestions() {
                 {d.question_choices.map((s, idx) => (
                   <OptionTab s={s} idx={idx} key={s.id} fetch={fetchAll} />
                 ))}
-                <AddOptionBtn id={d.id} cat={cat} fetch={fetchAll} />
+                <AddOptionBtn id={d.id} cat={cat} fetch={fetchAll} survey={surveyType} />
               </AccordionContent>
             </AccordionItem>
           </Accordion>

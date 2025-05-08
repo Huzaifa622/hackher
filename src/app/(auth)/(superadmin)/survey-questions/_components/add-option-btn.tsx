@@ -14,17 +14,22 @@ import { api } from "@/lib/axiosInstance";
 import { CirclePlus } from "lucide-react";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
+import { ISurveyType } from "./survey-questions";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export default function AddOptionBtn({
   id,
   fetch,
+  survey,
   cat
 }: {
   id: string;
   cat:string;
+  survey:ISurveyType[];
   fetch: () => Promise<void>;
 }) {
     const [name , setName] = useState<string>("")
+    const [choiceId,setChoiceId  ]  = useState("");
     const [open , setOpen] = useState(false)
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -38,6 +43,21 @@ export default function AddOptionBtn({
           <DialogTitle>Add Option</DialogTitle>
         </DialogHeader>
         <div className="grid gap-4 py-4">
+             <Select
+                    defaultValue={choiceId}
+                    onValueChange={(val: string) => setChoiceId(val)}
+                  >
+                    <SelectTrigger defaultValue={choiceId} className="w-[90%] mx-auto  bg-white">
+                      <SelectValue  defaultValue={choiceId} />
+                    </SelectTrigger>
+                    <SelectContent className="bg-white">
+                      {survey.map((c) => (
+                        <SelectItem key={c.id} value={c.id} className="capitalize">
+                          {c.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="name" className="">
               Name
@@ -61,7 +81,7 @@ export default function AddOptionBtn({
                   {
                     question: id,
                     choice_text: name,
-                    choice_type:cat
+                    choice_type:choiceId
                   }
                 );
                 toast.success("Option Added Successfully");
