@@ -23,7 +23,7 @@ import calculateAge from "@/lib/age-calculator";
 export default function HostAndGuestByAge() {
   const [role, setRole] = useState<"host" | "guest">("host");
   const [ageGroup, setAgeGroup] = useState<"above 18" | "below 18">("above 18");
-  const [gender, setGender] = useState<"male" | "female" | "other">("male");
+  const [gender, setGender] = useState<  "female" | "other">("female"  );
   const [data, setData] = useState<
     {
       fname: string;

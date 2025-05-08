@@ -14,7 +14,7 @@ interface Props {
   gender: string;
   age: string;
   setRole:React.Dispatch<"host"|"guest">;
-  setGender:React.Dispatch<"male"|"female" |"other">;
+  setGender:React.Dispatch<"female" |"other">;
   setAge:React.Dispatch<"above 18"|"below 18">;
 }
 export default function Filter({ role, gender, age , setAge , setGender,setRole }: Props) {
@@ -54,7 +54,7 @@ export default function Filter({ role, gender, age , setAge , setGender,setRole 
             <SelectValue className="capitalize" placeholder="Male" />
           </SelectTrigger>
           <SelectContent className="bg-white">
-            {["male", "female", "other"].map((c, idx) => (
+            {["female", "other"].map((c, idx) => (
               <SelectItem key={idx} value={c} className="capitalize">
                 {c}
               </SelectItem>

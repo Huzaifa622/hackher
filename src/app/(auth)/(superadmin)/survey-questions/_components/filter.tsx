@@ -9,12 +9,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { ICat } from "./survey-questions";
 interface Props {
   cat: string;
-
+  allCat: ICat[];
   setCat: React.Dispatch<React.SetStateAction<string>>;
 }
-export default function Filter({ cat, setCat }: Props) {
+export default function Filter({ cat, setCat , allCat }: Props) {
   return (
     <div className="bg-[#f1f1fa] rounded-xl p-4">
   
@@ -27,9 +28,9 @@ export default function Filter({ cat, setCat }: Props) {
             <SelectValue placeholder="Host" />
           </SelectTrigger>
           <SelectContent className="bg-white">
-            {["host", "guest"].map((c, idx) => (
-              <SelectItem key={idx} value={c} className="capitalize">
-                {c}
+            {allCat.map((c, idx) => (
+              <SelectItem key={idx} value={c.id} className="capitalize">
+                {c.title}
               </SelectItem>
             ))}
           </SelectContent>

@@ -1,3 +1,4 @@
+"use client"
 import { Filter as LFilter } from "lucide-react"
  
 import {
@@ -9,7 +10,10 @@ import {
     SelectTrigger,
     SelectValue,
   } from "@/components/ui/select"
+import { useEffect } from "react"
 export default function Filter(){
+
+
     return(
         <div className="bg-[#f1f1fa] rounded-xl p-4">
             <div className="bg-white flex items-center gap-2 mb-4 w-fit p-4 rounded-md border">

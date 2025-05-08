@@ -3,11 +3,12 @@ import { useEffect, useState } from "react";
 import { columns } from "./columns";
 import { DataTable } from "./data-table";
 import Filter from "./filter";
-import {getSurveyQuestion} from "../actions";
+import {getSurveyQuestion , getQCat} from "../actions";
 import Loader from "@/components/ui/loader";
 import calculateAge from "@/lib/age-calculator";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import QuestionHeader from "./question-header";
+import OptionTab from "./question-option-tab";
 
 // const date = new Date();
 // const data = [
@@ -21,6 +22,12 @@ import QuestionHeader from "./question-header";
 //   },
 //   // ...
 // ];
+
+export interface ICat  {
+  id: string;
+  title: string;
+  description: string;
+}
 export interface IQuestionChoice {
   id: string;
   choice_text: string;
@@ -35,29 +42,22 @@ export interface Question {
   question_choices: IQuestionChoice[];
 }
 export default function SurveyQuestions() {
-const [ cat, setCat] = useState("")
+  const [allCat , setAllCat] = useState<ICat[]>([])
+const [ cat, setCat] = useState("bfcb16f3-7532-4079-bcc6-a5ef8fd461cc")
   const [data, setData] = useState<
     Question[]
   >();
   const [loader, setLoader] = useState(true);
   const fetchAll = async () => {
-    const res = await getSurveyQuestion({cat });
-    if (res) {
-      const resData = res.data;
-     const withAgeData = resData.map(
-        (d: {
-          fname: string;
-          lname: string;
-          contact: string;
-          email: string;
-          dob: string;
-          gender: string;
-        }) => ({ ...d, age: calculateAge(String(d.dob)) })
-      );
-// console.log()
-      setData(withAgeData);
+    const cRes  = await getQCat();
+    if(cRes){
+     setAllCat(cRes.data)
     }
-
+    const sRes = await getSurveyQuestion({cat });
+    if (sRes) {
+ 
+      setData(sRes.data);
+    }
     setLoader(false);
   };
   useEffect(() => {
@@ -74,6 +74,7 @@ const [ cat, setCat] = useState("")
   return (
     <div className="p-5">
       <Filter
+      allCat={allCat}
       cat={cat}
         setCat={setCat}
       />
@@ -86,10 +87,10 @@ const [ cat, setCat] = useState("")
               </AccordionTrigger>
               <AccordionContent className="px-4 ">
                 {/* <h1 className="text-base mb-2">Options</h1> */}
-                {d.question_choices.map((s, idx) => (
+                {/* {d.question_choices.map((s, idx) => (
                   <OptionTab s={s} idx={idx} key={s.id} fetch={fetchAll} />
-                ))}
-                <AddOptionBtn id={d.id} fetch={fetchAll} />
+                ))} */}
+                {/* <AddOptionBtn id={d.id} fetch={fetchAll} /> */}
               </AccordionContent>
             </AccordionItem>
           </Accordion>
