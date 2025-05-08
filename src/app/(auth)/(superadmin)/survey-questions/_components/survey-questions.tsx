@@ -159,7 +159,7 @@ export default function SurveyQuestions() {
         </Dialog>
       </div>
       {data &&
-        data.map((d, idx) => (
+        data.map((d) => (
           <Accordion key={d.id} type="single" collapsible className="w-full">
             <AccordionItem value="item-1">
               <AccordionTrigger className="px-4 text-xl font-medium">
@@ -174,7 +174,7 @@ export default function SurveyQuestions() {
                 {d.question_choices.map((s, idx) => (
                   <OptionTab s={s} idx={idx} key={s.id} fetch={fetchAll} />
                 ))}
-                <AddOptionBtn id={d.id} fetch={fetchAll} />
+                <AddOptionBtn id={d.id} cat={cat} fetch={fetchAll} />
               </AccordionContent>
             </AccordionItem>
           </Accordion>

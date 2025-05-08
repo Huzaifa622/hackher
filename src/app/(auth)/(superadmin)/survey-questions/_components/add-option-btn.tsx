@@ -17,9 +17,11 @@ import toast from "react-hot-toast";
 
 export default function AddOptionBtn({
   id,
-  fetch
+  fetch,
+  cat
 }: {
   id: string;
+  cat:string;
   fetch: () => Promise<void>;
 }) {
     const [name , setName] = useState<string>("")
@@ -55,10 +57,11 @@ export default function AddOptionBtn({
               e.preventDefault();
               try {
                 const res = await api.post(
-                  "/superadmin/v1/info/add_symptom_options/",
+                  "/superadmin/v1/survey/survey_choices/",
                   {
-                    symtom: id,
+                    question: id,
                     name: name,
+                    choice_type:cat
                   }
                 );
                 toast.success("Option Added Successfully");

@@ -25,7 +25,16 @@ export default function QuestionHeader({
   fetch: () => Promise<void>;
 }) {
   const [isOpenDialog, setIsOpenDialog] = useState(false);
-  const [name, setName] = useState<string>(sname);
+
+  const [addQData, setAddQData] = useState<{
+    question_type: string;
+    question_text: string;
+    choice_selection_limit: string;
+  }>({
+    question_type: "multiple_choice",
+    question_text: sname,
+    choice_selection_limit: "1",
+  });
   return (
     <div className="flex items-center gap-5">
       {" "}
@@ -49,8 +58,13 @@ export default function QuestionHeader({
                   </Label>
                   <Input
                     id="name"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
+                    value={addQData.question_text}
+                    onChange={(e) =>
+                      setAddQData((prev) => ({
+                        ...prev,
+                        question_text: e.target.value,
+                      }))
+                    }
                     className="col-span-3"
                   />
                 </div>
@@ -60,16 +74,13 @@ export default function QuestionHeader({
                   type="button"
                   onClick={async (e: React.SyntheticEvent) => {
                     try {
-                      const res = await api.put(
-                        "/superadmin/v1/info/update_symptom/",
-                        {
-                          id: id,
-                          name: name,
-                        }
-                      );
-                      console.log(res);
-                      fetch();
                       setIsOpenDialog(false);
+                      const res = await api.patch(
+                        `/superadmin/v1/survey/update_survay_question/?id=${id}`,
+                        addQData
+                      );
+                    
+                      fetch();
                     } catch (error: any) {
                       // console.log(error)
                       toast.error(error.response.data.error);
