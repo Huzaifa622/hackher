@@ -81,6 +81,10 @@ console.log(role)
                 title="Survey Questions"
                 href="/survey-questions"
               />
+                    <SidebarTab
+                title="Packages"
+                href="/all-packages"
+              />
             </>
           )}
            {role &&role == "influencer" && (
