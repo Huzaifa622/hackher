@@ -68,11 +68,11 @@ export default function OptionTab({
                     try {
                       const res = await api.patch(
                         `/superadmin/v1/survey/update_survey_choices/?id=${s.id}`,
-                  {
-                          choce_text: name,
+                        {
+                          choice_text: name,
                         }
                       );
-                      
+
                       fetch();
                       setOpen(false);
                     } catch (error: any) {
@@ -96,7 +96,7 @@ export default function OptionTab({
               );
               fetch();
               toast.success("Option Delete Successfully");
-            } catch (error:any) {
+            } catch (error: any) {
               toast.error(error.response.data.error);
             }
           }}
@@ -107,4 +107,3 @@ export default function OptionTab({
     </div>
   );
 }
-
