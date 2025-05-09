@@ -13,12 +13,12 @@ export default function DelUsers() {
       days_since_request: number;
     }[]
   >();
- 
+
   const [loader, setLoader] = useState(true);
   const fetchAll = async () => {
     const res = await getHostWeekSummary();
     setData(res.data);
-setLoader(false)
+    setLoader(false);
   };
 
   useEffect(() => {
@@ -36,7 +36,6 @@ setLoader(false)
     <div className="p-5">
       {/* <Filter /> */}
       <div>
-
         <DataTable
           columns={Columns(fetchAll)}
           data={data ? data : []}

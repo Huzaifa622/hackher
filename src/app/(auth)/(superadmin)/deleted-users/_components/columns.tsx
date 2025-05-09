@@ -188,7 +188,12 @@ export const Columns = (
   {
     accessorKey: "requested_date",
     header: "Date of Request",
-  },
+    cell: ({ row }) => {
+      const rawDate : Date = row.getValue("requested_date");
+      const formattedDate = new Date(rawDate).toISOString().split("T")[0];
+      return formattedDate;
+    },
+  }
 
   // {
   //   id: "actions",
